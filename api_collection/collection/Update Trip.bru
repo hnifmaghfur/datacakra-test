@@ -1,0 +1,20 @@
+meta {
+  name: Update Trip
+  type: http
+  seq: 7
+}
+
+patch {
+  url: {{host}}/trip/2
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "email":"trialtenant@han.dev",
+    "destination":"Marauke Timur",
+    "startDate":"2025-01-02T13:37:00.000Z",
+    "endDate":"2025-01-10T02:23:00.000Z"
+  }
+}

@@ -73,9 +73,17 @@ export class TripService {
       throw new NotFoundException('Data Not Found');
     }
 
-    // add checktenant and checkadmin
-    // add update query
+    // validate if startDate more than endDate
+    if (payload.startDate > payload.endDate) {
+      throw new BadRequestException('Wrong input data in date');
+    }
 
+    // check admin input and tenant is valid
+    await this.userService.findByEmail(payload.email);
+    await this.userService.findByEmail(payload.createdBy);
+
+    // update query
+    await this.tripRepo.save(payload);
     return responseWrapper({ id: payload.id }, 'Success update trip');
   }
 

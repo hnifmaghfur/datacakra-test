@@ -67,13 +67,16 @@ export class TripController {
 
   @UseGuards(AuthGuard, new UserGuard('admin'))
   @Patch(':id')
+  @ApiCreatedResponse({
+    type: TApiResponse,
+  })
   update(
     @Auth() authData: DataToken,
     @Param('id') id: string,
     @Body() updateTripDto: ValidTripDto,
   ): Promise<TApiResponse> {
     const validData = validUpdateTripDto.safeParse({
-      id,
+      id: Number(id),
       ...updateTripDto,
       createdBy: authData.email,
     });
