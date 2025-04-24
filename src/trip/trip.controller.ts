@@ -5,7 +5,6 @@ import {
   Body,
   Patch,
   Param,
-  Delete,
   UseGuards,
   UsePipes,
   BadRequestException,
@@ -13,7 +12,6 @@ import {
 import { TripService } from './trip.service';
 import {
   CreateTripDto,
-  ValidTripDto,
   validTripDto,
   validUpdateTripDto,
 } from './dto/trip.dto';
@@ -60,12 +58,6 @@ export class TripController {
   }
 
   @UseGuards(AuthGuard, new UserGuard('admin'))
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.tripService.findOne(+id);
-  }
-
-  @UseGuards(AuthGuard, new UserGuard('admin'))
   @Patch(':id')
   @ApiCreatedResponse({
     type: TApiResponse,
@@ -73,7 +65,7 @@ export class TripController {
   update(
     @Auth() authData: DataToken,
     @Param('id') id: string,
-    @Body() updateTripDto: ValidTripDto,
+    @Body() updateTripDto: CreateTripDto,
   ): Promise<TApiResponse> {
     const validData = validUpdateTripDto.safeParse({
       id: Number(id),
@@ -87,8 +79,8 @@ export class TripController {
   }
 
   @UseGuards(AuthGuard, new UserGuard('admin'))
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.tripService.remove(+id);
+  @Patch(':id/delete')
+  remove(@Auth() authData: DataToken, @Param('id') id: string) {
+    return this.tripService.remove(+id, authData);
   }
 }

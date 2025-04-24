@@ -61,10 +61,6 @@ export class TripService {
     );
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} trip`;
-  }
-
   async update(payload: ValidUpdateTripDto): Promise<TApiResponse> {
     const checkTrip = await this.tripRepo.findOne({
       where: { id: payload.id },
@@ -87,7 +83,17 @@ export class TripService {
     return responseWrapper({ id: payload.id }, 'Success update trip');
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} trip`;
+  async remove(id: number, authData: DataToken) {
+    // validate user
+    await this.userService.findByEmail(authData.email);
+
+    const checkTrip = await this.tripRepo.findOne({ where: { id } });
+    if (!checkTrip) {
+      throw new NotFoundException('trip not found');
+    }
+
+    // query delete data trip
+    await this.tripRepo.delete(id);
+    return responseWrapper('', `This action removes a #${id} trip`);
   }
 }
