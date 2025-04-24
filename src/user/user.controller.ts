@@ -10,13 +10,14 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { createUserDto, TCreateUserDto, UpdateUserDto } from './dto/user.dto';
+import { createUserDto, TCreateUserDto, updateUserDto } from './dto/user.dto';
 import { responseWrapper } from 'src/utils/wrapper';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { Auth } from 'src/auth/auth.decorator';
 import { DataToken } from 'src/auth/dto/token.dto';
 import { UserGuard } from './user.guard';
 import { ApiCreatedResponse } from '@nestjs/swagger';
+import { TApiResponse } from 'src/public/public.dto';
 
 @Controller('user')
 export class UserController {
@@ -27,7 +28,7 @@ export class UserController {
   @ApiCreatedResponse({
     type: TCreateUserDto,
   })
-  async create(@Body() payload: TCreateUserDto) {
+  async create(@Body() payload: TCreateUserDto): Promise<TApiResponse> {
     // validate data
     const validPayload = createUserDto.safeParse(payload);
     if (!validPayload.success) {
@@ -45,15 +46,20 @@ export class UserController {
   }
 
   @UseGuards(AuthGuard, new UserGuard('admin'))
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
-  }
-
-  @UseGuards(AuthGuard, new UserGuard('admin'))
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+id, updateUserDto);
+  @ApiCreatedResponse({
+    type: TCreateUserDto,
+  })
+  async update(
+    @Param('id') id: string,
+    @Body() payload: TCreateUserDto,
+  ): Promise<TApiResponse> {
+    const validData = updateUserDto.safeParse({ id: Number(id), ...payload });
+    if (!validData.success) {
+      throw new BadRequestException('Invalid input data');
+    }
+    await this.userService.update(validData.data);
+    return responseWrapper({ id }, 'Success update data');
   }
 
   @UseGuards(AuthGuard, new UserGuard('admin'))

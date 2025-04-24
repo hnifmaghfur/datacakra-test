@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import {
   CreateUserDto,
   InsertUserDto,
@@ -34,15 +38,12 @@ export class UserService {
         id: true,
         email: true,
         name: true,
+        role: true,
       },
       where: {
         email: Not(payload.email),
       },
     });
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
   }
 
   async findByEmail(email: string): Promise<User> {
@@ -53,8 +54,22 @@ export class UserService {
     return data;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} ${updateUserDto.name} user`;
+  async update(payload: UpdateUserDto) {
+    //validate user data is exist
+    const data = await this.userRepo.findOne({ where: { id: payload.id } });
+    if (!data) {
+      throw new NotFoundException('user not found');
+    }
+
+    // validate email is already used
+    const cEmail = await this.userRepo.findOne({
+      where: { email: payload.email },
+    });
+    if (cEmail && cEmail.email !== data.email) {
+      throw new BadRequestException('you cannot use this email.');
+    }
+
+    return await this.userRepo.save(payload);
   }
 
   remove(id: number) {

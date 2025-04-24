@@ -80,6 +80,10 @@ export class TripController {
 
   @UseGuards(AuthGuard, new UserGuard('admin'))
   @Patch(':id/delete')
+  @ApiCreatedResponse({
+    type: TApiResponse,
+    description: 'For delete we use patch not delete routes.',
+  })
   remove(@Auth() authData: DataToken, @Param('id') id: string) {
     return this.tripService.remove(+id, authData);
   }
