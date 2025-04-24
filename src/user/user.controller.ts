@@ -5,7 +5,6 @@ import {
   Body,
   Patch,
   Param,
-  Delete,
   BadRequestException,
   UseGuards,
 } from '@nestjs/common';
@@ -63,7 +62,7 @@ export class UserController {
   }
 
   @UseGuards(AuthGuard, new UserGuard('admin'))
-  @Delete(':id')
+  @Patch(':id/delete')
   remove(@Param('id') id: string) {
     return this.userService.remove(+id);
   }

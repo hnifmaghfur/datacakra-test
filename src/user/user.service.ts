@@ -14,6 +14,7 @@ import { User } from './entities/user.entity';
 import { Not, Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { DataToken } from 'src/auth/dto/token.dto';
+import { responseWrapper } from 'src/utils/wrapper';
 
 @Injectable()
 export class UserService {
@@ -72,7 +73,20 @@ export class UserService {
     return await this.userRepo.save(payload);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: number) {
+    const cUser = await this.userRepo.findOne({ where: { id } });
+    if (!cUser) {
+      throw new NotFoundException('user not found');
+    }
+
+    if (cUser.role === 'admin') {
+      throw new BadRequestException(
+        'You cannot delete admin, please change role first',
+      );
+    }
+
+    // query delete user
+    await this.userRepo.delete(id);
+    return responseWrapper('', `This action removes a #${id} user`);
   }
 }
