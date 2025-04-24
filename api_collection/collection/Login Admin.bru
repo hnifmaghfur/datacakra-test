@@ -5,14 +5,20 @@ meta {
 }
 
 post {
-  url: {{host}}/api/v1/auth/login
+  url: {{host}}/auth/login
   body: json
   auth: none
 }
 
 body:json {
   {
+  //   "email":"hantenant@mag.dev",
+  //   "email":"trialtenant@han.dev",
     "email":"han@mag.dev",
-    "password":"11111"
+    "password":"trial"
   }
+}
+
+script:post-response {
+  bru.setEnvVar("token",res.body.data)
 }

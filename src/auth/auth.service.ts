@@ -4,6 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { UserService } from 'src/user/user.service';
 import * as bcrypt from 'bcrypt';
 import { responseWrapper } from 'src/utils/wrapper';
+import { TApiResponse } from 'src/public/public.dto';
 
 @Injectable()
 export class AuthService {
@@ -12,7 +13,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async login(loginDto: loginDtoType) {
+  async login(loginDto: loginDtoType): Promise<TApiResponse> {
     const cUser = await this.userService.findByEmail(loginDto.email);
 
     // Check if user exists

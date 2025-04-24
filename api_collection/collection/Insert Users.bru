@@ -5,7 +5,15 @@ meta {
 }
 
 post {
-  url: {{host}}/api/v1/user
-  body: none
+  url: {{host}}/user
+  body: json
   auth: inherit
+}
+
+body:json {
+  {
+    "email":"trialtenant@han.dev",
+    "name":"trial tenant swagger",
+    "role":"tenant"
+  }
 }

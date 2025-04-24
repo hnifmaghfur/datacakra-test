@@ -11,7 +11,6 @@ export class UserGuard implements CanActivate {
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     const user = context.switchToHttp().getRequest().user;
-    console.log(user);
     return this.roles == user.role;
   }
 }

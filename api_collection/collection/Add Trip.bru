@@ -1,0 +1,20 @@
+meta {
+  name: Add Trip
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{host}}/trip
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "email":"hantenant@mag.dev",
+    "destination":"Marauke",
+    "startDate":"2025-01-02T13:37:00.000Z",
+    "endDate":"2025-01-20T02:23:00.000Z"
+  }
+}
