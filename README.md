@@ -1,98 +1,116 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Trip Management API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A NestJS-based RESTful API for managing trip records with authentication, authorization, and data validation.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Table of Contents
 
-## Description
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Running the Application](#running-the-application)
+- [API Documentation](#api-documentation)
+- [API Endpoints](#api-endpoints)
+- [Data Models](#data-models)
+- [Contributing](#contributing)
+- [License](#license)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Features
 
-## Project setup
+- JWT-based authentication
+- Role-based access control (Admin & Tenant)
+- CRUD operations for trips
+- Input validation with Zod
+- Swagger (OpenAPI) documentation
+- Bruno for developer-related support. ([link](https://docs.usebruno.com/introduction/what-is-bruno))
 
-```bash
-$ npm install
-```
+## Tech Stack
 
-## Compile and run the project
+- Node.js & TypeScript
+- NestJS framework
+- TypeORM
+- Database using SQLite 3
+- Zod (validation)
+- PostgreSQL (or any TypeORM‐supported database)
+- Swagger (OpenAPI)
 
-```bash
-# development
-$ npm run start
+## Requirements
 
-# watch mode
-$ npm run start:dev
+- Node.js v14+
+- npm v6+
+- SQLite 3
 
-# production mode
-$ npm run start:prod
-```
-
-## Run tests
+## Installation
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+git clone https://github.com/hnifmaghfur/datacakra-test.git
+cd trip-api
+npm install
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+## Running the Application
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+npm run start
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+Visit `http://localhost:3000/api/v1` for the API root and `http://localhost:3000/api-docs` for Swagger UI.
 
-## Resources
+## API Documentation
 
-Check out a few resources that may come in handy when working with NestJS:
+Swagger UI is available at `/api-docs` and is generated automatically based on your controllers and Zod schemas.
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+Alternatively, you can contact Bruno for developer-related support. You can find it in the `api_collection` folder. Documentation for using Bruno can be found [here](https://docs.usebruno.com/introduction/what-is-bruno).
 
-## Support
+## API Endpoints
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Authentication
 
-## Stay in touch
+- **POST** `/auth/login` — Authenticate and receive JWT
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Users
+
+- **GET** `/user` — List all users except the authenticated one (requires JWT)
+- **POST** `/user` — Create a new users (Admin only)
+- **PATCH** `/user/:id` — Update users details (Admin only)
+- **DELETE** `/user/:id` — Delete a users (Admin only)
+
+### Trips
+
+- **POST** `/trip` — Create a new trip (Admin only)
+- **GET** `/trip` — Retrieve all trips (Admin sees all, User/Tenant sees their own)
+- **GET** `/trip/:id` — Retrieve a specific trip by ID (Admin only)
+- **PATCH** `/trip/:id` — Update trip details (Admin only)
+- **DELETE** `/trip/:id` — Delete a trip (Admin only)
+
+## Data Models
+
+### User Model
+
+| Field       | Type   | Description               |
+| ----------- | ------ | ------------------------- |
+| `Id   `     | number | User identifier           |
+| `email`     | string | Email of the trip creator |
+| `password ` | string | Password for login        |
+| `name`      | string | Name of user              |
+| `role   `   | string | Role for user             |
+
+### Trip Model
+
+| Field         | Type   | Description                |
+| ------------- | ------ | -------------------------- |
+| `id`          | number | Trip identifier            |
+| `userId`      | number | User identifier            |
+| `createdBy`   | string | Admin create trip record   |
+| `destination` | string | Destination of the trip    |
+| `startDate`   | string | ISO datetime of start date |
+| `endDate`     | string | ISO datetime of end date   |
+
+## Contributing
+
+- Hanif Maghfur
 
 ## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
